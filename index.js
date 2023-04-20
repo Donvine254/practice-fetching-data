@@ -2,7 +2,7 @@ const menu = document.getElementById("menu");
 const apiURL = "https://fakestoreapi.com/products";
 const objectArray = [];
 
-async function fetchComments() {
+async function fetchProducts() {
   const response = await fetch(apiURL);
   const data = await response.json();
   for (const product of data) {
@@ -11,16 +11,22 @@ async function fetchComments() {
     objectArray.push(productObj);
   }
   console.log(objectArray);
-  function renderMenu() {
-    for (const product of objectArray) {
-      const productsMenu = document.createElement("li");
-      productsMenu.textContent = product.description;
-      menu.appendChild(productsMenu);
-    }
-  }
   renderMenu();
 }
 
-fetchComments();
+function renderMenu() {
+  for (const product of objectArray) {
+    const productsMenu = document.createElement("li");
+    productsMenu.textContent = product.description;
+    menu.appendChild(productsMenu);
+  }
+}
+
+fetchProducts().then(() => {
+  // You can now safely access the populated objectArray here
+  console.log(objectArray[0]);
+}).catch((error) => {
+  console.error(error);
+});
 
 
